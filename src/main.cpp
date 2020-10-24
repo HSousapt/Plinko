@@ -1,23 +1,35 @@
 #include <SFML/Graphics.hpp>
 
-int main()
-{
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+using namespace sf;
 
+int main(int argc, char **argv)
+{
+    //Window creation
+    RenderWindow window(VideoMode(1024, 768), "SFML works!");
+
+    //Shape Creation
+    CircleShape shape(100.f);
+    shape.setFillColor(Color::Green);
+
+    //Event polling
     while (window.isOpen())
     {
-        sf::Event event;
+        Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+            if (event.type == Event::Closed)
                 window.close();
         }
+        //BEGIN UPDATE REGION
+        //END RENDER REGIN
 
-        window.clear();
-        window.draw(shape);
-        window.display();
+        //BEGIN RENDER REGION
+        {
+            window.clear();
+            window.draw(shape);
+            window.display();
+        }
+        //END RENDER REGION
     }
 
     return 0;
