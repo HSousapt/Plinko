@@ -1,47 +1,23 @@
-#include <SFML/Graphics.hpp>
-
-using namespace sf;
+#include "plinko.h"
 
 int main(int argc, char **argv)
 {
-    //Window creation
-    RenderWindow window(VideoMode(1024, 768), "SFML works!");
-
-    //Shape Creation
-    CircleShape shape(100.f);
-    shape.setFillColor(Color::Green);
+    //Init Game Engine
+    Plinko plinko;
 
     //Event polling
-    while (window.isOpen())
+    while (plinko.isRunning())
     {
-        Event event;
-        while (window.pollEvent(event))
-        {
-            switch (event.type)
-            {
-            case Event::Closed:
-                window.close();
-                break;
 
-            case Event::KeyPressed:
-                if (event.key.code == Keyboard::Escape)
-                    window.close();
-                break;
-            }
-        }
         //BEGIN UPDATE REGION
+        {
+            plinko.update();
+        }
         //END UPDATE REGIN
 
         //BEGIN RENDER REGION
         {
-            /* Clear old frame */
-            window.clear();
-
-            /* Draw the Game */
-            window.draw(shape);
-
-            /* Window is done drawing */
-            window.display();
+            plinko.render();
         }
         //END RENDER REGION
     }
