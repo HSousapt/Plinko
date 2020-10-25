@@ -17,16 +17,30 @@ int main(int argc, char **argv)
         Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == Event::Closed)
+            switch (event.type)
+            {
+            case Event::Closed:
                 window.close();
+                break;
+
+            case Event::KeyPressed:
+                if (event.key.code == Keyboard::Escape)
+                    window.close();
+                break;
+            }
         }
         //BEGIN UPDATE REGION
-        //END RENDER REGIN
+        //END UPDATE REGIN
 
         //BEGIN RENDER REGION
         {
+            /* Clear old frame */
             window.clear();
+
+            /* Draw the Game */
             window.draw(shape);
+
+            /* Window is done drawing */
             window.display();
         }
         //END RENDER REGION
