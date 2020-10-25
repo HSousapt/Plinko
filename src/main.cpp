@@ -1,6 +1,6 @@
 #include "plinko.h"
 
-int main(int argc, char **argv)
+int main()
 {
     //Init Game Engine
     Plinko plinko;

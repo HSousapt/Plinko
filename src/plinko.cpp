@@ -5,6 +5,8 @@ Plinko::Plinko()
 {
     this->init_vars();
     this->init_window();
+    this->init_font();
+    this->init_text();
 }
 
 //Destructor definition
@@ -66,8 +68,7 @@ void Plinko::update()
     */
     this->pollEvents();
 
-    //Mouse position relative to the window
-    cout << "Mouse position: x-> " << Mouse::getPosition(*this->window).x << " y -> " << Mouse::getPosition(*this->window).y << endl;
+    this->updateMousePos();
 }
 
 void Plinko::render()
@@ -82,6 +83,8 @@ void Plinko::render()
     this->window->clear();
 
     //Draw game objects
+
+    this->renderText(*this->window);
 
     this->window->display();
 }
@@ -106,6 +109,62 @@ void Plinko::init_window()
     this->vm.width = 1024;
     this->vm.height = 720;
     this->window = new RenderWindow(this->vm, "Plinko", Style::Titlebar | Style::Close);
+}
+
+void Plinko::updateMousePos()
+{
+    /*
+        @return void
+
+        Updates to Mouse Position()
+         relative to the window
+    */
+
+    this->mousePos = Mouse::getPosition(*this->window);
+}
+
+void Plinko::init_font()
+{
+    /*
+        @return void
+
+        Loads a font from a file
+    */
+    if (!this->font.loadFromFile("fonts/Casino3DLinesMarquee-Italic.ttf"))
+    {
+        cout << "ERROR :: PLINKO::INIT_FONT -> Failed to load font" << endl;
+    }
+}
+
+void Plinko::init_text()
+{
+    /*
+        @return void
+
+        Initialize text with a specific font
+    */
+
+    this->uiText.setFont(this->font);
+    this->uiText.setCharacterSize(100);
+    this->uiText.setFillColor(Color::Red);
+    this->uiText.setString("A Maria e Linda");
+}
+
+void Plinko::renderText(RenderTarget &target)
+{
+    /*
+
+    */
+    target.draw(this->uiText);
+}
+
+void Plinko::updateText()
+{
+    /*stringstream ss;
+
+    ss << "Credits: " << this->credits;
+
+    this->uiText.setString(ss.string());*/
 }
 
 //END FUNCTIONS DEFINITION REGION

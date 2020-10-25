@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 using namespace sf;
@@ -27,12 +28,19 @@ public:
 
     void pollEvents();
 
+    void updateMousePos();
+
+    void renderText(RenderTarget &target);
+
+    void updateText();
+
     void update();
 
     void render();
 
     //END FUNCTIONS DEFINITION REGION
 private:
+    //Variables
     //Game window
     RenderWindow *window;
 
@@ -42,9 +50,23 @@ private:
     //Game events
     Event event;
 
+    //Mouse position relative to the game window
+    Vector2i mousePos;
+
+    //Resources
+    Font font;
+
+    //Text
+    Text uiText;
+
+    //Private functions
     void init_vars();
 
     void init_window();
+
+    void init_font();
+
+    void init_text();
 };
 
 #endif
