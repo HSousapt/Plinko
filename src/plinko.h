@@ -1,12 +1,7 @@
 #ifndef PLINKO_H
 #define PLINKO_H
-#include <SFML/Graphics.hpp>
 
-#include <iostream>
-#include <sstream>
-
-using namespace std;
-using namespace sf;
+#include "balls.h"
 
 /*
 
@@ -59,6 +54,9 @@ private:
     //Text
     Text uiText;
 
+    //Ball
+    Balls *ball;
+
     //Private functions
     void init_vars();
 
@@ -67,6 +65,8 @@ private:
     void init_font();
 
     void init_text();
+
+    void init_ball();
 };
 
 #endif
