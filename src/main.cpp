@@ -1,26 +1,13 @@
-#include "plinko.h"
+#include "Plinko.hpp"
 
 int main()
 {
     //Init Game Engine
     Plinko plinko;
 
-    //Event polling
-    while (plinko.isRunning())
-    {
 
-        //BEGIN UPDATE REGION
-        {
-            plinko.update();
-        }
-        //END UPDATE REGIN
-
-        //BEGIN RENDER REGION
-        {
-            plinko.render();
-        }
-        //END RENDER REGION
-    }
+    //Run plinko game loop
+    plinko.run();
 
     return 0;
 }

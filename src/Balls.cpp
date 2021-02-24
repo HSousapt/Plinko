@@ -1,9 +1,9 @@
-#include "balls.h"
+#include "Balls.hpp"
 
 Balls::Balls()
 {
-    this->init_sprite();
     this->init_texture();
+    this->init_sprite();
 }
 
 Balls::~Balls()
@@ -27,7 +27,7 @@ void Balls::init_texture()
         Loads texture from file
     */
 
-    if (!this->texture.loadFromFile("textures/ok.png"))
+    if (!this->texture.loadFromFile("../textures/pokerchip1.png"))
     {
         cout << "ERROR :: BALLS::INIT_TEXTURE -> Failed to load texture!" << endl;
     }

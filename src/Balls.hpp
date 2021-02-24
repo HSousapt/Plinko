@@ -12,7 +12,7 @@ using namespace std;
 
 class Balls
 {
-public:
+public: 
     Balls();
     ~Balls();
 

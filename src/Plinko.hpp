@@ -1,7 +1,8 @@
 #ifndef PLINKO_H
 #define PLINKO_H
 
-#include "balls.h"
+#include "State.hpp"
+#include "Balls.hpp"
 
 /*
 
@@ -19,7 +20,7 @@ public:
 
     //BEGIN FUNCTIONS DEFINITION REGION
 
-    const bool isRunning();
+    bool isRunning();
 
     void pollEvents();
 
@@ -32,6 +33,12 @@ public:
     void update();
 
     void render();
+
+    void renderWorld();
+
+    void updateDeltaTime();
+
+    void run();
 
     //END FUNCTIONS DEFINITION REGION
 private:
@@ -57,6 +64,20 @@ private:
     //Ball
     Balls *ball;
 
+    //Background Image
+    Sprite backgroundS;
+
+    //Background Texture
+    Texture backgroundTex;
+
+    //Clock for delta-time
+    Clock dtClock;
+
+    //Delta time;
+    float dt;
+
+    stack<State*> states;
+
     //Private functions
     void init_vars();
 
@@ -67,6 +88,8 @@ private:
     void init_text();
 
     void init_ball();
+
+    void init_background();
 };
 
 #endif
