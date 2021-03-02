@@ -1,7 +1,8 @@
 #ifndef PLINKO_H
 #define PLINKO_H
 
-#include "State.hpp"
+#include "GameState.hpp"
+#include "MainMenuState.hpp"
 #include "Balls.hpp"
 
 /*
@@ -18,13 +19,15 @@ public:
     //Destructor
     ~Plinko();
 
-    //BEGIN FUNCTIONS DEFINITION REGION
+/*
+*
+*   PUBLIC FUNCTIONS
+*
+*/
 
     bool isRunning();
 
     void pollEvents();
-
-    void updateMousePos();
 
     void renderText(RenderTarget &target);
 
@@ -40,7 +43,12 @@ public:
 
     void run();
 
-    //END FUNCTIONS DEFINITION REGION
+/*
+*
+*   Private FUNCTIONS
+*
+*/
+
 private:
     //Variables
     //Game window
@@ -51,9 +59,6 @@ private:
 
     //Game events
     Event event;
-
-    //Mouse position relative to the game window
-    Vector2i mousePos;
 
     //Resources
     Font font;
@@ -90,6 +95,8 @@ private:
     void init_ball();
 
     void init_background();
+
+    void init_states();
 };
 
 #endif

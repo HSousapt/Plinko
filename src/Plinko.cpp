@@ -6,9 +6,10 @@ Plinko::Plinko()
     this->init_vars();
     this->init_window();
     this->init_background();
-    this->init_font();
-    this->init_text();
-    this->init_ball();
+    //this->init_font();
+    //this->init_text();
+    //this->init_ball();
+    this->init_states();
 }
 
 //Destructor definition
@@ -16,6 +17,13 @@ Plinko::~Plinko()
 {
     delete this->window;
     delete this->ball;
+
+    while(!this->states.empty())
+    {
+        delete this->states.top();
+        this->states.pop();
+
+    }
 }
 
 //BEGIN FUNCTIONS DEFINITION REGION
@@ -50,12 +58,12 @@ void Plinko::pollEvents()
             this->window->close();
             break;
 
-        case Event::KeyPressed:
+        /*case Event::KeyPressed:
             if (event.key.code == Keyboard::Escape)
             {
                 this->window->close();
                 break;
-            }
+            }*/
         default:
             break;
         }
@@ -71,7 +79,23 @@ void Plinko::update()
     */
     this->pollEvents();
 
-    this->updateMousePos();
+    if(!this->states.empty())
+    {
+        this->states.top()->update(this->dt);
+
+        if(this->states.top()->getQuitStatus())
+        {
+            this->states.top()->endState();
+
+            delete this->states.top();
+            this->states.pop();
+        }
+    }
+    //Close Application
+    else
+    {
+        this->window->close();
+    }
 }
 
 void Plinko::render()
@@ -80,19 +104,20 @@ void Plinko::render()
         @return void
 
         - Clears old Frames
-        - Renders objects
+        - If there is any state in the stack then Renders objects
         - Display frame in window
     */
     this->window->clear();
-
     //Render background
     this->renderWorld();
 
-    //Draw game objects
+    if(!this->states.empty())
+    {
+        this->states.top()->render(/*this->window*/);
 
-    //this->renderText(*this->window);
+        //Draw game objects
+    }
 
-    this->ball->render(*this->window);
     this->window->display();
 }
 
@@ -127,6 +152,7 @@ void Plinko::init_vars()
         Initialize Game variables
     */
     this->window = nullptr;
+    this->dt = 0.f;
 }
 
 void Plinko::init_window()
@@ -139,20 +165,8 @@ void Plinko::init_window()
     this->vm.width = 1024;
     this->vm.height = 720;
     this->window = new RenderWindow(this->vm, "Plinko", Style::Titlebar | Style::Close);
-    this->window->setFramerateLimit(144);
+    this->window->setFramerateLimit(120);
     this->window->setVerticalSyncEnabled(false);
-}
-
-void Plinko::updateMousePos()
-{
-    /*
-        @return void
-
-        Updates to Mouse Position()
-         relative to the window
-    */
-
-    this->mousePos = Mouse::getPosition(*this->window);
 }
 
 void Plinko::init_background()
@@ -173,6 +187,11 @@ void Plinko::init_background()
     this->backgroundS.setTexture(this->backgroundTex);
 
     this->backgroundS.setScale(scaleX, scaleY);
+}
+
+void Plinko::init_states()
+{
+    this->states.push(new MainMenuState(this->window));
 }
 
 void Plinko::init_font()
@@ -226,15 +245,6 @@ void Plinko::updateDeltaTime()
     */    
 
    this->dt = this->dtClock.restart().asSeconds();
-}
-
-void Plinko::updateText()
-{
-    /*stringstream ss;
-
-    ss << "Credits: " << this->credits;
-
-    this->uiText.setString(ss.string());*/
 }
 
 void Plinko::init_ball()

@@ -7,12 +7,15 @@
 class GameState : public State
 {
 public:
-    GameState();
+    GameState(RenderWindow* window);
     virtual ~GameState();
 
     //Functions
-    void update();
-    void render();
+    void update(const float &dt);
+    void render(RenderTarget *target);
+    void updateInput(const float &dt);
+    void endState();
+    void setState();
 
 private:
 };
